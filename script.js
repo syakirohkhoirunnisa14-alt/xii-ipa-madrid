@@ -21,11 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     members.forEach(member => {
       const card = document.createElement('div');
       card.className = 'glass-card member-card';
+      
+      const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=FFD8C8&color=2C2A29`;
+
       card.innerHTML = `
         <div class="profile-ring">
-          <img src="${member.photo}" alt="${member.name}" onError="this.src='https://via.placeholder.com/150?text=Foto'">
+          <img src="${member.photo}" alt="${member.name}" onError="this.src='${fallbackImg}'">
         </div>
-        <h3 class="member-name">${member.name}</h3>
+        <h3 class="member-name">${member.nickname || member.name}</h3>
         <p class="member-role">${member.role}</p>
       `;
       card.addEventListener('click', () => openModal(member));
@@ -33,25 +36,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Buka Modal Pop-up
+  // Buka Modal Pop-Up Detail
   function openModal(m) {
-    modalBody.innerHTML = `
+    const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=FFD8C8&color=2C2A29`;
+    
+    let detailHTML = `
       <div style="text-align: center; margin-bottom: 20px;">
         <div class="modal-avatar">
-          <img src="${m.photo}" alt="${m.name}" onError="this.src='https://via.placeholder.com/150?text=Foto'">
+          <img src="${m.photo}" alt="${m.name}" onError="this.src='${fallbackImg}'">
         </div>
-        <h2>${m.name}</h2>
+        <h2>${m.name} ${m.nickname ? `(${m.nickname})` : ''}</h2>
         <span style="font-size: 0.85rem; color: #6B6560;">${m.role}</span>
       </div>
-      <div class="detail-item"><strong>Cita-cita:</strong> ${m.dream || '—'}</div>
-      <div class="detail-item"><strong>Tentang Saya:</strong> ${m.about || '—'}</div>
-      <div class="detail-item"><strong>Makanan Favorit:</strong> ${m.food || '—'}</div>
-      <div class="detail-item"><strong>Lagu Favorit:</strong> ${m.song || '—'}</div>
-      <div class="detail-item"><strong>Kutipan:</strong> "${m.quote || '—'}"</div>
-      <div class="detail-item"><strong>Momen Berkesan:</strong> ${m.memorable || '—'}</div>
-      <div class="detail-item"><strong>Pesan Masa Depan:</strong> ${m.futureLetter || '—'}</div>
-      <div class="detail-item highlight"><strong>Harapan untuk Kelas:</strong> ${m.hope || '—'}</div>
     `;
+
+    // Jika Wali Kelas
+    if (m.role.includes("Wali Kelas")) {
+      detailHTML += `
+        <div class="detail-item"><strong>Tahun Ajaran:</strong> ${m.years || '—'}</div>
+        <div class="detail-item"><strong>Kesan Tentang Madrid:</strong> ${m.kesan || '—'}</div>
+        <div class="detail-item"><strong>Momen Berkesan:</strong> ${m.momen || '—'}</div>
+        <div class="detail-item"><strong>Pesan & Nasihat:</strong> ${m.pesan || '—'}</div>
+        <div class="detail-item"><strong>Kutipan Penutup:</strong> "${m.quote || '—'}"</div>
+        <div class="detail-item highlight"><strong>Harapan Masa Depan:</strong> ${m.harapan || '—'}</div>
+      `;
+    } else {
+      // Jika Siswa
+      detailHTML += `
+        <div class="detail-item"><strong>TTL:</strong> ${m.ttl || '—'}</div>
+        <div class="detail-item"><strong>Impian / Cita-cita:</strong> ${m.dream || '—'}</div>
+        <div class="detail-item"><strong>Karakter Diri:</strong> ${m.traits ? m.traits.join(', ') : '—'}</div>
+        <div class="detail-item"><strong>Hobi:</strong> ${m.hobi || '—'}</div>
+        <div class="detail-item"><strong>Makanan Favorit:</strong> ${m.food || '—'}</div>
+        <div class="detail-item"><strong>Lagu Favorit:</strong> ${m.song || '—'}</div>
+        <div class="detail-item"><strong>Kutipan Favorit:</strong> "${m.quote || '—'}"</div>
+        <hr style="margin: 15px 0; border: none; border-top: 1px dashed #ccc;">
+        <div class="detail-item"><strong>Kesan di Madrid:</strong> ${m.kesan || '—'}</div>
+        <div class="detail-item"><strong>Momen Tak Terlupakan:</strong> ${m.momen || '—'}</div>
+        <div class="detail-item"><strong>Pesan untuk Teman:</strong> ${m.pesan || '—'}</div>
+        <div class="detail-item"><strong>Surat Diri Masa Depan:</strong> ${m.futureLetter || '—'}</div>
+        <div class="detail-item highlight"><strong>Harapan untuk Madrid:</strong> ${m.harapan || '—'}</div>
+      `;
+    }
+
+    modalBody.innerHTML = detailHTML;
     modal.classList.add('active');
   }
 
@@ -69,12 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
     wishWall.innerHTML = '';
 
     members.forEach(m => {
-      if (m.hope && m.hope !== '—') {
+      if (m.harapan && m.harapan !== 'Belum diisi') {
         const card = document.createElement('div');
         card.className = 'glass-card wish-card';
         card.innerHTML = `
-          <p class="wish-text">"${m.hope}"</p>
-          <span class="wish-author">— ${m.name}</span>
+          <p class="wish-text">"${m.harapan}"</p>
+          <span class="wish-author">— ${m.nickname || m.name}</span>
         `;
         wishWall.appendChild(card);
       }
