@@ -19,11 +19,11 @@
   --font-body: 'Poppins', sans-serif;
 }
 
-/* Reset & Smooth Scroll */
+/* Reset & Basic Styling */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -36,8 +36,9 @@ body {
   line-height: 1.6;
   position: relative;
   min-height: 100vh;
+  padding-top: 70px;
   
-  /* Background Utama Website (Fixed) */
+  /* Fixed Background Header/Website */
   background-image: url('madrid1.jpeg');
   background-attachment: fixed;
   background-size: cover;
@@ -45,7 +46,7 @@ body {
   background-repeat: no-repeat;
 }
 
-/* Warm Cream Overlay + Subtle Blur (Faces Still Recognizable) */
+/* Warm Cream Overlay dengan Subtle Blur (muka tetap kelihatan) */
 body::before {
   content: '';
   position: fixed;
@@ -53,34 +54,416 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 253, 248, 0.82); /* Warm Cream Overlay */
-  backdrop-filter: blur(6px); /* Blur halus 6px */
+  background: rgba(255, 253, 248, 0.82);
+  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   z-index: -1;
   pointer-events: none;
 }
 
-/* Headings Styling */
+/* Headings */
 h1, h2, h3, h4, .font-heading {
   font-family: var(--font-heading);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-/* Floating Glass Cards */
+.section-title {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.section-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+
+/* Sticky Glass Navbar */
+.glass-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  background: rgba(255, 253, 248, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #D96B27;
+}
+
+/* Floating Glass Card Base Style */
 .glass-card {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 
-              0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+/* Section Common Container */
+section {
+  padding: 60px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 1. Hero Section */
+.hero-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content {
+  padding: 50px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.hero-years {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #D96B27;
+  margin-bottom: 20px;
+}
+
+.hero-quote {
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}
+
+.btn-journey {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--peach);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-journey:hover {
+  transform: translateY(-2px);
+  background: #FFC4B0;
+}
+
+/* 2. Counter Section */
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.counter-box {
+  padding: 30px;
+  text-align: center;
+}
+
+.counter-number, .counter-symbol {
+  font-size: 2.8rem;
+  color: var(--text-primary);
+}
+
+/* 3. Timeline Section */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  max-width: 500px;
+  margin: 30px auto 0;
+}
+
+.timeline-item {
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+}
+
+.timeline-arrow {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+
+/* 4. People Carousel Section */
+.people-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 10px 40px;
+  scroll-snap-type: x mandatory;
+}
+
+.people-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.people-carousel::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.member-card {
+  flex: 0 0 200px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  scroll-snap-align: center;
+}
+
+.member-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.profile-ring {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--sky-blue), var(--peach), var(--lavender));
+}
+
+.profile-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.member-name {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.member-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Modal Pop-up Profil */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 550px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 35px;
+  position: relative;
+  background: rgba(255, 253, 248, 0.95);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.modal-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.modal-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-item {
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.detail-item.highlight {
+  background: var(--butter);
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+/* 5. Video Section */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.video-card {
+  padding: 12px;
+  overflow: hidden;
+}
+
+.video-card iframe {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  border: none;
+}
+
+/* 6. Wish Wall */
+.wish-wall-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 0 30px;
+}
+
+.wish-card {
+  flex: 0 0 280px;
+  padding: 24px;
+}
+
+.wish-text {
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.wish-author {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* 7. Floating Music Button */
+.floating-music-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+
+#music-toggle-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4A4A4A;
+  transition: transform 0.3s ease;
+}
+
+#music-toggle-btn:hover {
+  transform: scale(1.08);
+}
+
+#music-toggle-btn.playing {
+  animation: rotateDisc 8s linear infinite;
+  border-color: var(--peach);
+  color: #D96B27;
+}
+
+@keyframes rotateDisc {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 8. Footer */
+.glass-footer {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+  background: rgba(255, 253, 248, 0.7);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.heart-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 8px;
 }
