@@ -3,73 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yearbook Class - Painted Memories</title>
+  <title>Yearbook Madrid - Painted Memories</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Hero Banner -->
+  <!-- 1. Hero Section -->
   <header class="hero">
+    <div class="hero-overlay"></div>
     <div class="hero-content">
+      <span class="hero-badge">Yearbook Portfolio</span>
       <h1>Painted Memories</h1>
-      <p>Kenangan Indah Kelas Sofia, Latvia, & Madrid</p>
+      <p>Perjalanan 3 Tahun Kita: X Sofia (2023-2024) &bull; XI Latvia (2024-2025) &bull; XII Madrid (2025-2026)</p>
     </div>
   </header>
 
-  <!-- Container Utama -->
   <main class="container">
-    
-    <!-- Tab Pemilih Kelas -->
-    <div class="class-tabs">
-      <button class="tab-btn active" onclick="switchClass('sofia', this)">Kelas Sofia</button>
-      <button class="tab-btn" onclick="switchClass('latvia', this)">Kelas Latvia</button>
-      <button class="tab-btn" onclick="switchClass('madrid', this)">Kelas Madrid</button>
-    </div>
 
-    <!-- Bagian 1: Daftar Anggota Kelas -->
-    <section class="section-container">
-      <h2 class="section-title">Anggota Kelas</h2>
-      <div class="members-grid" id="members-grid">
-        <!-- Kartu anggota akan diisi otomatis lewat JS -->
+    <!-- 2. Section 33 Foto Profil Anggota (Horizontal Scroll) -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Anggota Kelas</h2>
+        <p>2 Wali Kelas & 31 Siswa (Klik foto untuk melihat detail)</p>
+      </div>
+      <div class="carousel-container">
+        <button class="nav-btn left-btn" onclick="scrollContainer('members-carousel', -300)">&#10094;</button>
+        <div class="horizontal-carousel" id="members-carousel">
+          <!-- Rendered by JS -->
+        </div>
+        <button class="nav-btn right-btn" onclick="scrollContainer('members-carousel', 300)">&#10095;</button>
       </div>
     </section>
 
-    <!-- Bagian 2: Galeri Carousel Foto -->
-    <section class="section-container">
-      <h2 class="section-title">Galeri Kenangan</h2>
-      <div class="carousel-wrapper">
-        <button class="nav-btn left-btn" onclick="scrollGallery(-1)">&#10094;</button>
-        <div class="gallery-carousel" id="gallery-carousel">
-          <!-- Foto galeri akan diisi otomatis lewat JS -->
+    <!-- 3. Timeline 3 Tahun -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Timeline 3 Tahun</h2>
+        <p>Jejak langkah perjalanan angkatan kita</p>
+      </div>
+      <div class="timeline-grid" id="timeline-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- 4. Galeri Foto Per Jenjang -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Galeri Kenangan</h2>
+        <p>Momen-momen berharga dari masa ke masa</p>
+      </div>
+
+      <!-- Gallery X Sofia -->
+      <div class="gallery-block">
+        <h3>X Sofia <span class="sub-year">(2023 - 2024)</span></h3>
+        <div class="carousel-container">
+          <button class="nav-btn left-btn" onclick="scrollContainer('gallery-sofia', -300)">&#10094;</button>
+          <div class="horizontal-carousel" id="gallery-sofia"></div>
+          <button class="nav-btn right-btn" onclick="scrollContainer('gallery-sofia', 300)">&#10095;</button>
         </div>
-        <button class="nav-btn right-btn" onclick="scrollGallery(1)">&#10095;</button>
+      </div>
+
+      <!-- Gallery XI Latvia -->
+      <div class="gallery-block">
+        <h3>XI Latvia <span class="sub-year">(2024 - 2025)</span></h3>
+        <div class="carousel-container">
+          <button class="nav-btn left-btn" onclick="scrollContainer('gallery-latvia', -300)">&#10094;</button>
+          <div class="horizontal-carousel" id="gallery-latvia"></div>
+          <button class="nav-btn right-btn" onclick="scrollContainer('gallery-latvia', 300)">&#10095;</button>
+        </div>
+      </div>
+
+      <!-- Gallery XII Madrid -->
+      <div class="gallery-block">
+        <h3>XII Madrid <span class="sub-year">(2025 - 2026)</span></h3>
+        <div class="carousel-container">
+          <button class="nav-btn left-btn" onclick="scrollContainer('gallery-madrid', -300)">&#10094;</button>
+          <div class="horizontal-carousel" id="gallery-madrid"></div>
+          <button class="nav-btn right-btn" onclick="scrollContainer('gallery-madrid', 300)">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Video Kompilasi Kenangan -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Video Kompilasi Kenangan</h2>
+        <p>Kumpulan video momen indah perjalanan kita</p>
+      </div>
+      <div class="video-grid" id="video-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- 6. Harapan Untuk Kelas Madrid -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Harapan Untuk Kelas Madrid</h2>
+        <p>Pesan hangat & doa dari masing-masing anggota</p>
+      </div>
+      <div class="hopes-grid" id="hopes-grid">
+        <!-- Rendered by JS -->
       </div>
     </section>
 
   </main>
 
-  <!-- POPUP 1: Lightbox Galeri Foto -->
-  <div id="lightbox" class="modal" onclick="closeModal('lightbox')">
-    <span class="close-btn">&times;</span>
-    <img class="modal-img" id="lightbox-img" src="" alt="Gallery Detail">
-    <div id="lightbox-caption" class="modal-caption"></div>
+  <!-- POP-UP MODAL: Detail Profil Anggota -->
+  <div id="profile-modal" class="modal-backdrop" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-card">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modal-img" src="" alt="Profile" class="modal-avatar">
+        <h3 id="modal-name">Nama Anggota</h3>
+        <span id="modal-role" class="modal-badge">Role</span>
+        <blockquote id="modal-quote" class="modal-quote">"Quote..."</blockquote>
+        <div class="modal-hope-box">
+          <strong>Harapan:</strong>
+          <p id="modal-hope">Harapan...</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- POPUP 2: Modal Detail Profil Anggota -->
-  <div id="profile-modal" class="modal" onclick="checkCloseProfile(event)">
-    <div class="modal-card">
-      <span class="close-btn" onclick="closeModal('profile-modal')">&times;</span>
-      <img id="profile-modal-img" src="" alt="Profile Image" class="profile-avatar">
-      <h3 id="profile-modal-name">Nama Anggota</h3>
-      <p id="profile-modal-role" class="profile-role">Jabatan</p>
-      <p id="profile-modal-quote" class="profile-quote">"Pesan atau quotes..."</p>
-      <a id="profile-modal-ig" href="#" target="_blank" class="profile-ig-btn">Instagram</a>
+  <!-- 7. Floating Spotify Player Button -->
+  <div class="floating-music-container">
+    <button class="music-toggle-btn" onclick="toggleSpotifyWidget()" title="Putar Musik Instrumental">
+      🎵 <span>Musik</span>
+    </button>
+    <div class="spotify-widget" id="spotify-widget">
+      <iframe src="https://open.spotify.com/embed/track/1VIkPMOnWl3Xmc1aSpjbWN?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </div>
 
   <footer>
-    <p>&copy; 2026 Yearbook Class - Painted Memories</p>
+    <p>&copy; 2026 Yearbook XII Madrid &bull; Painted Memories</p>
   </footer>
 
   <script src="data.js"></script>
