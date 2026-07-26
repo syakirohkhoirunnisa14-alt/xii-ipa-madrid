@@ -1,162 +1,150 @@
+// Render setelah DOM siap
 document.addEventListener('DOMContentLoaded', () => {
-  // Fetch Data Anggota
-  fetch('data.json')
-    .then(res => res.json())
-    .then(data => {
-      renderCarousel(data);
-      renderWishes(data);
-    })
-    .catch(err => console.error('Error fetching data.json:', err));
-
-  const modal = document.getElementById('profile-modal');
-  const modalBody = document.getElementById('modal-body-content');
-  const closeModalBtn = document.getElementById('close-modal');
-
-  // Render Carousel Anggota
-  function renderCarousel(members) {
-    const carousel = document.getElementById('people-carousel');
-    if (!carousel) return;
-    carousel.innerHTML = '';
-
-    members.forEach(member => {
-      const card = document.createElement('div');
-      card.className = 'glass-card member-card';
-      
-      const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=FFD8C8&color=2C2A29`;
-
-      card.innerHTML = `
-        <div class="profile-ring">
-          <img src="${member.photo}" alt="${member.name}" onError="this.src='${fallbackImg}'">
-        </div>
-        <h3 class="member-name">${member.nickname || member.name}</h3>
-        <p class="member-role">${member.role}</p>
-      `;
-      card.addEventListener('click', () => openModal(member));
-      carousel.appendChild(card);
-    });
-  }
-
-  // Buka Modal Pop-Up Detail
-  function openModal(m) {
-    const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=FFD8C8&color=2C2A29`;
-    
-    let detailHTML = `
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div class="modal-avatar">
-          <img src="${m.photo}" alt="${m.name}" onError="this.src='${fallbackImg}'">
-        </div>
-        <h2>${m.name} ${m.nickname ? `(${m.nickname})` : ''}</h2>
-        <span style="font-size: 0.85rem; color: #6B6560;">${m.role}</span>
-      </div>
-    `;
-
-    // Jika Wali Kelas
-    if (m.role.includes("Wali Kelas")) {
-      detailHTML += `
-        <div class="detail-item"><strong>Tahun Ajaran:</strong> ${m.years || '—'}</div>
-        <div class="detail-item"><strong>Kesan Tentang Madrid:</strong> ${m.kesan || '—'}</div>
-        <div class="detail-item"><strong>Momen Berkesan:</strong> ${m.momen || '—'}</div>
-        <div class="detail-item"><strong>Pesan & Nasihat:</strong> ${m.pesan || '—'}</div>
-        <div class="detail-item"><strong>Kutipan Penutup:</strong> "${m.quote || '—'}"</div>
-        <div class="detail-item highlight"><strong>Harapan Masa Depan:</strong> ${m.harapan || '—'}</div>
-      `;
-    } else {
-      // Jika Siswa
-      detailHTML += `
-        <div class="detail-item"><strong>TTL:</strong> ${m.ttl || '—'}</div>
-        <div class="detail-item"><strong>Impian / Cita-cita:</strong> ${m.dream || '—'}</div>
-        <div class="detail-item"><strong>Karakter Diri:</strong> ${m.traits ? m.traits.join(', ') : '—'}</div>
-        <div class="detail-item"><strong>Hobi:</strong> ${m.hobi || '—'}</div>
-        <div class="detail-item"><strong>Makanan Favorit:</strong> ${m.food || '—'}</div>
-        <div class="detail-item"><strong>Lagu Favorit:</strong> ${m.song || '—'}</div>
-        <div class="detail-item"><strong>Kutipan Favorit:</strong> "${m.quote || '—'}"</div>
-        <hr style="margin: 15px 0; border: none; border-top: 1px dashed #ccc;">
-        <div class="detail-item"><strong>Kesan di Madrid:</strong> ${m.kesan || '—'}</div>
-        <div class="detail-item"><strong>Momen Tak Terlupakan:</strong> ${m.momen || '—'}</div>
-        <div class="detail-item"><strong>Pesan untuk Teman:</strong> ${m.pesan || '—'}</div>
-        <div class="detail-item"><strong>Surat Diri Masa Depan:</strong> ${m.futureLetter || '—'}</div>
-        <div class="detail-item highlight"><strong>Harapan untuk Madrid:</strong> ${m.harapan || '—'}</div>
-      `;
-    }
-
-    modalBody.innerHTML = detailHTML;
-    modal.classList.add('active');
-  }
-
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-  }
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
-  });
-
-  // Render Wish Wall
-  function renderWishes(members) {
-    const wishWall = document.getElementById('wish-wall');
-    if (!wishWall) return;
-    wishWall.innerHTML = '';
-
-    members.forEach(m => {
-      if (m.harapan && m.harapan !== 'Belum diisi') {
-        const card = document.createElement('div');
-        card.className = 'glass-card wish-card';
-        card.innerHTML = `
-          <p class="wish-text">"${m.harapan}"</p>
-          <span class="wish-author">— ${m.nickname || m.name}</span>
-        `;
-        wishWall.appendChild(card);
-      }
-    });
-  }
-
-  // Counter Animasi
-  const counters = document.querySelectorAll('.counter-number');
-  let animated = false;
-
-  window.addEventListener('scroll', () => {
-    const counterSec = document.getElementById('counter');
-    if (!counterSec || animated) return;
-
-    if (counterSec.getBoundingClientRect().top < window.innerHeight / 1.2) {
-      counters.forEach(c => {
-        const target = +c.getAttribute('data-target');
-        let count = 0;
-        const inc = target / 25;
-        const update = () => {
-          count += inc;
-          if (count < target) {
-            c.innerText = Math.ceil(count);
-            setTimeout(update, 40);
-          } else {
-            c.innerText = target;
-          }
-        };
-        update();
-      });
-      animated = true;
-    }
-  });
-
-  // Music Player Toggle
-  const musicBtn = document.getElementById('music-toggle-btn');
-  const bgMusic = document.getElementById('bg-music');
-  const playIcon = document.getElementById('play-icon');
-  const pauseIcon = document.getElementById('pause-icon');
-
-  if (musicBtn && bgMusic) {
-    musicBtn.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-          musicBtn.classList.add('playing');
-          playIcon.style.display = 'none';
-          pauseIcon.style.display = 'block';
-        }).catch(err => console.log(err));
-      } else {
-        bgMusic.pause();
-        musicBtn.classList.remove('playing');
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-      }
-    });
-  }
+  initMembers();
+  initTimeline();
+  initGalleries();
+  initVideos();
+  initHopes();
 });
+
+// Fungsi pembantu: Ubah link Google Drive biasa menjadi Direct Link Gambar
+function convertDriveUrl(url) {
+  if (!url) return 'https://via.placeholder.com/150';
+  const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (match && match[1]) {
+    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+  }
+  return url;
+}
+
+// 1. Render 33 Profil Anggota
+function initMembers() {
+  const container = document.getElementById('members-carousel');
+  container.innerHTML = '';
+
+  yearbookData.members.forEach((member, index) => {
+    const card = document.createElement('div');
+    card.className = 'member-card';
+    card.onclick = () => openProfileModal(index);
+
+    const imageUrl = convertDriveUrl(member.driveUrl);
+
+    card.innerHTML = `
+      <img src="${imageUrl}" alt="${member.name}" class="member-avatar" onerror="this.src='https://via.placeholder.com/150'">
+      <h3>${member.name}</h3>
+      <span class="role-badge">${member.role}</span>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// 2. Render Timeline 3 Tahun
+function initTimeline() {
+  const container = document.getElementById('timeline-grid');
+  container.innerHTML = '';
+
+  yearbookData.timeline.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'timeline-card';
+    card.innerHTML = `
+      <span class="year">${item.year} - ${item.phase}</span>
+      <h3>${item.title}</h3>
+      <p>${item.desc}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// 3. Render Carousel Galeri per Jenjang
+function initGalleries() {
+  ['sofia', 'latvia', 'madrid'].forEach(phase => {
+    const container = document.getElementById(`gallery-${phase}`);
+    if (!container) return;
+    container.innerHTML = '';
+
+    yearbookData.galleries[phase].forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.title}">
+        <div class="caption">${item.title}</div>
+      `;
+      container.appendChild(card);
+    });
+  });
+}
+
+// 4. Render Video Kompilasi YouTube
+function initVideos() {
+  const container = document.getElementById('video-grid');
+  container.innerHTML = '';
+
+  yearbookData.videos.forEach(video => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <iframe src="https://www.youtube.com/embed/${video.youtubeId}" allowfullscreen></iframe>
+      <h4>${video.title}</h4>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// 5. Render Harapan
+function initHopes() {
+  const container = document.getElementById('hopes-grid');
+  container.innerHTML = '';
+
+  yearbookData.members.forEach(member => {
+    const card = document.createElement('div');
+    card.className = 'hope-card';
+    card.innerHTML = `
+      <h4>${member.name}</h4>
+      <p>"${member.hope}"</p>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Scroll Horizontal Carousel
+function scrollContainer(id, amount) {
+  const container = document.getElementById(id);
+  if (container) {
+    container.scrollBy({ left: amount, behavior: 'smooth' });
+  }
+}
+
+// Open Modal Pop-up
+function openProfileModal(index) {
+  const member = yearbookData.members[index];
+  if (!member) return;
+
+  document.getElementById('modal-img').src = convertDriveUrl(member.driveUrl);
+  document.getElementById('modal-name').innerText = member.name;
+  document.getElementById('modal-role').innerText = member.role;
+  document.getElementById('modal-quote').innerText = `"${member.quote}"`;
+  document.getElementById('modal-hope').innerText = member.hope;
+
+  document.getElementById('profile-modal').style.display = 'flex';
+}
+
+// Close Modal
+function closeModal() {
+  document.getElementById('profile-modal').style.display = 'none';
+}
+
+function closeModalOnBackdrop(event) {
+  if (event.target.id === 'profile-modal') {
+    closeModal();
+  }
+}
+
+// Toggle Widget Spotify Music
+function toggleSpotifyWidget() {
+  const widget = document.getElementById('spotify-widget');
+  if (widget.style.display === 'block') {
+    widget.style.display = 'none';
+  } else {
+    widget.style.display = 'block';
+  }
+}
