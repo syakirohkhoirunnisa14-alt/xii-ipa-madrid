@@ -4,23 +4,434 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painted Memories — XII IPA Madrid</title>
-  <link rel="stylesheet" href="style.css">
+  
+  <!-- Font Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET & BASIC */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #2C2A29;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: 70px;
+      
+      /* Background Foto Utama */
+      background-image: url('madrid1.jpeg');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Warm Overlay Blur agar Tulisan Mudah Dibaca */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 253, 248, 0.82);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #6B6560;
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    /* NAVBAR */
+    .glass-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      background: rgba(255, 253, 248, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2C2A29;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #D96B27;
+    }
+
+    /* GLASS CARD BASE */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    section {
+      padding: 50px 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero-section {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      padding: 40px 30px;
+      max-width: 650px;
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #6B6560;
+    }
+
+    .hero-years {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #D96B27;
+      margin: 5px 0 15px;
+    }
+
+    .hero-quote {
+      font-style: italic;
+      color: #6B6560;
+      margin-bottom: 25px;
+    }
+
+    .btn-journey {
+      display: inline-block;
+      padding: 10px 28px;
+      background: #FFD8C8;
+      color: #2C2A29;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-journey:hover {
+      background: #FFC4B0;
+      transform: translateY(-2px);
+    }
+
+    /* COUNTER */
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .counter-box {
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    .counter-number, .counter-symbol {
+      font-size: 2.5rem;
+    }
+
+    /* TIMELINE */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .timeline-item {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* CAROUSEL ANGGOTA */
+    .people-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 5px 25px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .people-carousel::-webkit-scrollbar {
+      height: 6px;
+    }
+    .people-carousel::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 10px;
+    }
+
+    .member-card {
+      flex: 0 0 190px;
+      padding: 20px 15px;
+      text-align: center;
+      cursor: pointer;
+      scroll-snap-align: center;
+      transition: transform 0.3s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-ring {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #CFE8FF, #FFD8C8, #E8DEFF);
+    }
+
+    .profile-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .member-name {
+      font-size: 1.05rem;
+    }
+
+    .member-role {
+      font-size: 0.8rem;
+      color: #6B6560;
+    }
+
+    /* MODAL POPUP */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      background: rgba(255, 253, 248, 0.95);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .modal-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .modal-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .detail-item {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .detail-item.highlight {
+      background: #FFF3C2;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    /* VIDEO */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .video-card {
+      padding: 10px;
+    }
+
+    .video-card iframe {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      border: none;
+    }
+
+    /* WISH WALL */
+    .wish-wall-container {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 0 20px;
+    }
+
+    .wish-card {
+      flex: 0 0 260px;
+      padding: 20px;
+    }
+
+    .wish-text {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .wish-author {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #6B6560;
+    }
+
+    /* MUSIC PLAYER */
+    .floating-music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    #music-toggle-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #music-toggle-btn.playing {
+      animation: rotateDisc 8s linear infinite;
+      border-color: #FFD8C8;
+    }
+
+    @keyframes rotateDisc {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* FOOTER */
+    .glass-footer {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 50px;
+      background: rgba(255, 253, 248, 0.8);
+      border-top: 1px solid rgba(255, 255, 255, 0.8);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- 1. Sticky Glass Navbar -->
+  <!-- Navbar -->
   <nav class="glass-nav">
     <div class="nav-logo">Painted Memories</div>
     <ul class="nav-links">
       <li><a href="#hero">Beranda</a></li>
       <li><a href="#timeline">Perjalanan</a></li>
       <li><a href="#people">Anggota</a></li>
-      <li><a href="#gallery">Galeri</a></li>
       <li><a href="#videos">Video</a></li>
     </ul>
   </nav>
 
-  <!-- 2. Hero Section -->
+  <!-- Hero Section -->
   <section id="hero" class="hero-section">
     <div class="hero-content glass-card">
       <h1 class="hero-title">Painted Memories</h1>
@@ -33,8 +444,8 @@
     </div>
   </section>
 
-  <!-- 3. Memory Counter Section -->
-  <section id="counter" class="counter-section">
+  <!-- Counter -->
+  <section id="counter">
     <div class="counter-grid">
       <div class="glass-card counter-box">
         <h2 class="counter-number" data-target="33">0</h2>
@@ -55,118 +466,77 @@
     </div>
   </section>
 
-  <!-- 4. Timeline Section -->
-  <section id="timeline" class="timeline-section">
+  <!-- Timeline -->
+  <section id="timeline">
     <h2 class="section-title">Timeline 3 Tahun</h2>
     <div class="timeline-container">
       <div class="glass-card timeline-item">
         <h3>X Sofia</h3>
-        <span class="timeline-date">2023 – 2024</span>
-        <p>Wali Kelas: Zah Eed</p>
+        <p>2023 – 2024 • Wali Kelas: Zah Eed</p>
       </div>
-      <div class="timeline-arrow">↓</div>
+      <div style="font-size: 1.2rem; color: #6B6560;">↓</div>
       <div class="glass-card timeline-item">
         <h3>XI Latvia</h3>
-        <span class="timeline-date">2024 – 2025</span>
-        <p>Wali Kelas: Zah Eed</p>
+        <p>2024 – 2025 • Wali Kelas: Zah Eed</p>
       </div>
-      <div class="timeline-arrow">↓</div>
+      <div style="font-size: 1.2rem; color: #6B6560;">↓</div>
       <div class="glass-card timeline-item">
         <h3>XII Madrid</h3>
-        <span class="timeline-date">2025 – 2026</span>
-        <p>Wali Kelas: Zah Iput</p>
+        <p>2025 – 2026 • Wali Kelas: Zah Iput</p>
       </div>
     </div>
   </section>
 
-  <!-- 5. People Section (Horizontal Scroll Profil) -->
-  <section id="people" class="people-section">
+  <!-- Carousel Anggota -->
+  <section id="people">
     <h2 class="section-title">Anggota Kelas</h2>
-    <p class="section-sub">Geser ke samping untuk melihat seluruh anggota dan klik profil untuk detail</p>
-    
-    <!-- Carousel horizontal (Diisi otomatis dari data.json) -->
+    <p class="section-sub">Geser ke samping & klik profil untuk detail</p>
     <div id="people-carousel" class="people-carousel"></div>
   </section>
 
-  <!-- Modal Pop-Up Profil (Tampil ketika foto diklik) -->
+  <!-- Modal Pop-Up -->
   <div id="profile-modal" class="modal-overlay">
     <div class="glass-card modal-content">
       <button id="close-modal" class="close-btn">&times;</button>
-      <div class="modal-body" id="modal-body-content">
-        <!-- Detail form anggota dimasukkan secara dinamis via script.js -->
-      </div>
+      <div id="modal-body-content"></div>
     </div>
   </div>
 
-  <!-- 6. Gallery Section (Horizontal Scroll) -->
-  <section id="gallery" class="gallery-section">
-    <h2 class="section-title">Galeri Kenangan</h2>
-    
-    <div class="gallery-group">
-      <h3>X Sofia (2023-2024)</h3>
-      <div class="gallery-scroll" id="gallery-sofia">
-        <!-- Tambahkan tag <img> foto kenangan Sofia di sini -->
-      </div>
-    </div>
-
-    <div class="gallery-group">
-      <h3>XI Latvia (2024-2025)</h3>
-      <div class="gallery-scroll" id="gallery-latvia">
-        <!-- Tambahkan tag <img> foto kenangan Latvia di sini -->
-      </div>
-    </div>
-
-    <div class="gallery-group">
-      <h3>XII Madrid (2025-2026)</h3>
-      <div class="gallery-scroll" id="gallery-madrid">
-        <!-- Tambahkan tag <img> foto kenangan Madrid di sini -->
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Video Memories Section (Embed Youtube) -->
-  <section id="videos" class="videos-section">
+  <!-- Video -->
+  <section id="videos">
     <h2 class="section-title">Kompilasi Video</h2>
     <div class="video-grid">
       <div class="glass-card video-card">
-        <iframe src="https://www.youtube.com/embed/o3f4lJ96aM0" title="Video Kenangan 1" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/o3f4lJ96aM0" title="Video 1" allowfullscreen></iframe>
       </div>
       <div class="glass-card video-card">
-        <iframe src="https://www.youtube.com/embed/4vaRWogBwVo" title="Video Kenangan 2" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4vaRWogBwVo" title="Video 2" allowfullscreen></iframe>
       </div>
       <div class="glass-card video-card">
-        <iframe src="https://www.youtube.com/embed/lYPWcfJohT0" title="Video Kenangan 3" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/lYPWcfJohT0" title="Video 3" allowfullscreen></iframe>
       </div>
     </div>
   </section>
 
-  <!-- 8. Wish Wall Section -->
-  <section id="wishes" class="wishes-section">
+  <!-- Wish Wall -->
+  <section id="wishes">
     <h2 class="section-title">Harapan Masa Depan</h2>
-    <div class="wish-wall-container" id="wish-wall">
-      <!-- Kartu harapan di-render otomatis dari data.json -->
-    </div>
+    <div class="wish-wall-container" id="wish-wall"></div>
   </section>
 
-  <!-- 9. Floating Music Player (Pojok Kanan Bawah) -->
+  <!-- Music Player -->
   <div id="music-player-container" class="floating-music-btn">
-  <button id="music-toggle-btn" aria-label="Play/Pause Music">
-    <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24">
-      <path fill="currentColor" d="M8 5v14l11-7z"/>
-    </svg>
-    <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
-      <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-8z"/>
-    </svg>
-  </button>
-  <!-- Menyesuaikan langsung dengan nama file asli di GitHub -->
-  <audio id="bg-music" loop src="intro (end of the world) (extended instrumental).mp3"></audio>
-</div>
+    <button id="music-toggle-btn" aria-label="Play Music">
+      <svg id="play-icon" viewBox="0 0 24 24" width="22" height="22"><path fill="#2C2A29" d="M8 5v14l11-7z"/></svg>
+      <svg id="pause-icon" viewBox="0 0 24 24" width="22" height="22" style="display: none;"><path fill="#2C2A29" d="M6 19h4V5H6v14zm8-14v14h4V5h-8z"/></svg>
+    </button>
+    <audio id="bg-music" loop src="intro (end of the world) (extended instrumental).mp3"></audio>
+  </div>
 
-  <!-- 10. Footer -->
+  <!-- Footer -->
   <footer class="glass-footer">
     <h3>Painted Memories</h3>
     <p>Madrid XII IPA 4 | 2023 – 2026</p>
-    <p class="heart-text">Made with ❤️</p>
   </footer>
 
   <script src="script.js"></script>
