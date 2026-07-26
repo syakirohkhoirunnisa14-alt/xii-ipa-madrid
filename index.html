@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painted Memories — XII IPA Madrid</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. Sticky Glass Navbar -->
+  <nav class="glass-nav">
+    <div class="nav-logo">Painted Memories</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Beranda</a></li>
+      <li><a href="#timeline">Perjalanan</a></li>
+      <li><a href="#people">Anggota</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#videos">Video</a></li>
+    </ul>
+  </nav>
+
+  <!-- 2. Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content glass-card">
+      <h1 class="hero-title">Painted Memories</h1>
+      <p class="hero-subtitle">X Sofia • XI Latvia • XII Madrid</p>
+      <p class="hero-years">2023 – 2026</p>
+      <blockquote class="hero-quote">
+        "Every memory added a color. Together they became our masterpiece."
+      </blockquote>
+      <a href="#counter" class="btn-journey">Begin Our Journey</a>
+    </div>
+  </section>
+
+  <!-- 3. Memory Counter Section -->
+  <section id="counter" class="counter-section">
+    <div class="counter-grid">
+      <div class="glass-card counter-box">
+        <h2 class="counter-number" data-target="33">0</h2>
+        <p>Orang</p>
+      </div>
+      <div class="glass-card counter-box">
+        <h2 class="counter-number" data-target="3">0</h2>
+        <p>Tahun Bersama</p>
+      </div>
+      <div class="glass-card counter-box">
+        <h2 class="counter-number" data-target="3">0</h2>
+        <p>Nama Kelas</p>
+      </div>
+      <div class="glass-card counter-box">
+        <h2 class="counter-symbol">∞</h2>
+        <p>Kenangan Indah</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Timeline Section -->
+  <section id="timeline" class="timeline-section">
+    <h2 class="section-title">Timeline 3 Tahun</h2>
+    <div class="timeline-container">
+      <div class="glass-card timeline-item">
+        <h3>X Sofia</h3>
+        <span class="timeline-date">2023 – 2024</span>
+        <p>Wali Kelas: Zah Eed</p>
+      </div>
+      <div class="timeline-arrow">↓</div>
+      <div class="glass-card timeline-item">
+        <h3>XI Latvia</h3>
+        <span class="timeline-date">2024 – 2025</span>
+        <p>Wali Kelas: Zah Eed</p>
+      </div>
+      <div class="timeline-arrow">↓</div>
+      <div class="glass-card timeline-item">
+        <h3>XII Madrid</h3>
+        <span class="timeline-date">2025 – 2026</span>
+        <p>Wali Kelas: Zah Iput</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. People Section (Horizontal Scroll Profil) -->
+  <section id="people" class="people-section">
+    <h2 class="section-title">Anggota Kelas</h2>
+    <p class="section-sub">Geser ke samping untuk melihat seluruh anggota dan klik profil untuk detail</p>
+    
+    <!-- Carousel horizontal (Diisi otomatis dari data.json) -->
+    <div id="people-carousel" class="people-carousel"></div>
+  </section>
+
+  <!-- Modal Pop-Up Profil (Tampil ketika foto diklik) -->
+  <div id="profile-modal" class="modal-overlay">
+    <div class="glass-card modal-content">
+      <button id="close-modal" class="close-btn">&times;</button>
+      <div class="modal-body" id="modal-body-content">
+        <!-- Detail form anggota dimasukkan secara dinamis via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Gallery Section (Horizontal Scroll) -->
+  <section id="gallery" class="gallery-section">
+    <h2 class="section-title">Galeri Kenangan</h2>
+    
+    <div class="gallery-group">
+      <h3>X Sofia (2023-2024)</h3>
+      <div class="gallery-scroll" id="gallery-sofia">
+        <!-- Tambahkan tag <img> foto kenangan Sofia di sini -->
+      </div>
+    </div>
+
+    <div class="gallery-group">
+      <h3>XI Latvia (2024-2025)</h3>
+      <div class="gallery-scroll" id="gallery-latvia">
+        <!-- Tambahkan tag <img> foto kenangan Latvia di sini -->
+      </div>
+    </div>
+
+    <div class="gallery-group">
+      <h3>XII Madrid (2025-2026)</h3>
+      <div class="gallery-scroll" id="gallery-madrid">
+        <!-- Tambahkan tag <img> foto kenangan Madrid di sini -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Video Memories Section (Embed Youtube) -->
+  <section id="videos" class="videos-section">
+    <h2 class="section-title">Kompilasi Video</h2>
+    <div class="video-grid">
+      <div class="glass-card video-card">
+        <iframe src="https://www.youtube.com/embed/o3f4lJ96aM0" title="Video Kenangan 1" allowfullscreen></iframe>
+      </div>
+      <div class="glass-card video-card">
+        <iframe src="https://www.youtube.com/embed/4vaRWogBwVo" title="Video Kenangan 2" allowfullscreen></iframe>
+      </div>
+      <div class="glass-card video-card">
+        <iframe src="https://www.youtube.com/embed/lYPWcfJohT0" title="Video Kenangan 3" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Wish Wall Section -->
+  <section id="wishes" class="wishes-section">
+    <h2 class="section-title">Harapan Masa Depan</h2>
+    <div class="wish-wall-container" id="wish-wall">
+      <!-- Kartu harapan di-render otomatis dari data.json -->
+    </div>
+  </section>
+
+  <!-- 9. Floating Music Player (Pojok Kanan Bawah) -->
+  <div id="music-player-container" class="floating-music-btn">
+    <button id="music-toggle-btn" aria-label="Play/Pause Music">
+      <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M8 5v14l11-7z"/>
+      </svg>
+      <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
+        <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-8z"/>
+      </svg>
+    </button>
+    <!-- Musik Instrumental Loop -->
+    <audio id="bg-music" loop src="music.mp3"></audio>
+  </div>
+
+  <!-- 10. Footer -->
+  <footer class="glass-footer">
+    <h3>Painted Memories</h3>
+    <p>Madrid XII IPA 4 | 2023 – 2026</p>
+    <p class="heart-text">Made with ❤️</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
