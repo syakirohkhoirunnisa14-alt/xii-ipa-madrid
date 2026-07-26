@@ -1,69 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Fetch & Render Data Anggota dari data.json
+  // Fetch Data Anggota
   fetch('data.json')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-      renderPeopleCarousel(data);
-      renderWishWall(data);
+      renderCarousel(data);
+      renderWishes(data);
     })
-    .catch(error => console.error('Gagal memuat data.json:', error));
+    .catch(err => console.error('Error fetching data.json:', err));
 
-  // 2. Element Selectors
   const modal = document.getElementById('profile-modal');
   const modalBody = document.getElementById('modal-body-content');
   const closeModalBtn = document.getElementById('close-modal');
 
-  // 3. Render Carousel Profil (33 Anggota)
-  function renderPeopleCarousel(members) {
+  // Render Carousel Anggota
+  function renderCarousel(members) {
     const carousel = document.getElementById('people-carousel');
     if (!carousel) return;
-
     carousel.innerHTML = '';
+
     members.forEach(member => {
       const card = document.createElement('div');
       card.className = 'glass-card member-card';
       card.innerHTML = `
         <div class="profile-ring">
-          <img src="${member.photo}" alt="${member.name}" loading="lazy" onError="this.src='https://via.placeholder.com/150?text=${member.name}'">
+          <img src="${member.photo}" alt="${member.name}" onError="this.src='https://via.placeholder.com/150?text=Foto'">
         </div>
         <h3 class="member-name">${member.name}</h3>
         <p class="member-role">${member.role}</p>
       `;
-
-      // Event Klik Profil -> Buka Modal Pop-Up
-      card.addEventListener('click', () => openProfileModal(member));
+      card.addEventListener('click', () => openModal(member));
       carousel.appendChild(card);
     });
   }
 
-  // 4. Buka & Tampilkan Pop-Up Modal Profil
-  function openProfileModal(member) {
-    if (!modal || !modalBody) return;
-
+  // Buka Modal Pop-up
+  function openModal(m) {
     modalBody.innerHTML = `
-      <div class="modal-header">
+      <div style="text-align: center; margin-bottom: 20px;">
         <div class="modal-avatar">
-          <img src="${member.photo}" alt="${member.name}">
+          <img src="${m.photo}" alt="${m.name}" onError="this.src='https://via.placeholder.com/150?text=Foto'">
         </div>
-        <h2>${member.name}</h2>
-        <span class="badge">${member.role}</span>
+        <h2>${m.name}</h2>
+        <span style="font-size: 0.85rem; color: #6B6560;">${m.role}</span>
       </div>
-      <div class="modal-details">
-        <div class="detail-item"><strong>Cita-cita / Impian:</strong> ${member.dream || '—'}</div>
-        <div class="detail-item"><strong>Tentang Saya:</strong> ${member.about || '—'}</div>
-        <div class="detail-item"><strong>Makanan Favorit:</strong> ${member.food || '—'}</div>
-        <div class="detail-item"><strong>Lagu Favorit:</strong> ${member.song || '—'}</div>
-        <div class="detail-item"><strong>Kutipan (Quote):</strong> ${member.quote || '—'}</div>
-        <div class="detail-item"><strong>Momen Paling Berkesan:</strong> ${member.memorable || '—'}</div>
-        <div class="detail-item"><strong>Pesan untuk Diri Sendiri di Masa Depan:</strong> ${member.futureLetter || '—'}</div>
-        <div class="detail-item highlight"><strong>Harapan untuk Kelas Madrid:</strong> ${member.hope || '—'}</div>
-      </div>
+      <div class="detail-item"><strong>Cita-cita:</strong> ${m.dream || '—'}</div>
+      <div class="detail-item"><strong>Tentang Saya:</strong> ${m.about || '—'}</div>
+      <div class="detail-item"><strong>Makanan Favorit:</strong> ${m.food || '—'}</div>
+      <div class="detail-item"><strong>Lagu Favorit:</strong> ${m.song || '—'}</div>
+      <div class="detail-item"><strong>Kutipan:</strong> "${m.quote || '—'}"</div>
+      <div class="detail-item"><strong>Momen Berkesan:</strong> ${m.memorable || '—'}</div>
+      <div class="detail-item"><strong>Pesan Masa Depan:</strong> ${m.futureLetter || '—'}</div>
+      <div class="detail-item highlight"><strong>Harapan untuk Kelas:</strong> ${m.hope || '—'}</div>
     `;
-
     modal.classList.add('active');
   }
 
-  // Tutup Modal saat Tombol 'X' atau Luar Modal Diklik
   if (closeModalBtn) {
     closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
   }
@@ -71,58 +62,54 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) modal.classList.remove('active');
   });
 
-  // 5. Render Wish Wall (Harapan Anggota)
-  function renderWishWall(members) {
+  // Render Wish Wall
+  function renderWishes(members) {
     const wishWall = document.getElementById('wish-wall');
     if (!wishWall) return;
-
     wishWall.innerHTML = '';
-    members.forEach(member => {
-      if (member.hope && member.hope !== '—') {
-        const wishCard = document.createElement('div');
-        wishCard.className = 'glass-card wish-card';
-        wishCard.innerHTML = `
-          <p class="wish-text">"${member.hope}"</p>
-          <span class="wish-author">— ${member.name}</span>
+
+    members.forEach(m => {
+      if (m.hope && m.hope !== '—') {
+        const card = document.createElement('div');
+        card.className = 'glass-card wish-card';
+        card.innerHTML = `
+          <p class="wish-text">"${m.hope}"</p>
+          <span class="wish-author">— ${m.name}</span>
         `;
-        wishWall.appendChild(wishCard);
+        wishWall.appendChild(card);
       }
     });
   }
 
-  // 6. Memory Counter Animasi
-  const counterNumbers = document.querySelectorAll('.counter-number');
+  // Counter Animasi
+  const counters = document.querySelectorAll('.counter-number');
   let animated = false;
 
   window.addEventListener('scroll', () => {
-    const counterSection = document.getElementById('counter');
-    if (!counterSection || animated) return;
+    const counterSec = document.getElementById('counter');
+    if (!counterSec || animated) return;
 
-    const sectionPos = counterSection.getBoundingClientRect().top;
-    const screenPos = window.innerHeight / 1.3;
-
-    if (sectionPos < screenPos) {
-      counterNumbers.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
+    if (counterSec.getBoundingClientRect().top < window.innerHeight / 1.2) {
+      counters.forEach(c => {
+        const target = +c.getAttribute('data-target');
         let count = 0;
-        const speed = target / 30; // Kecepatan animasi
-
-        const updateCount = () => {
-          count += speed;
+        const inc = target / 25;
+        const update = () => {
+          count += inc;
           if (count < target) {
-            counter.innerText = Math.ceil(count);
-            setTimeout(updateCount, 40);
+            c.innerText = Math.ceil(count);
+            setTimeout(update, 40);
           } else {
-            counter.innerText = target;
+            c.innerText = target;
           }
         };
-        updateCount();
+        update();
       });
       animated = true;
     }
   });
 
-  // 7. Floating Music Player (Putar Instrumental Intro)
+  // Music Player Toggle
   const musicBtn = document.getElementById('music-toggle-btn');
   const bgMusic = document.getElementById('bg-music');
   const playIcon = document.getElementById('play-icon');
@@ -135,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
           musicBtn.classList.add('playing');
           playIcon.style.display = 'none';
           pauseIcon.style.display = 'block';
-        }).catch(err => console.log("Gagal memutar audio:", err));
+        }).catch(err => console.log(err));
       } else {
         bgMusic.pause();
         musicBtn.classList.remove('playing');
